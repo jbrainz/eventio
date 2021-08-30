@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Eventio, Event management application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Eventio is an event management application that allows logged in users ### Join,  Leave Or Edit an event.
+depending on the current logged in user, users can either decide to join an event they are not currently a part of, or leave an event if they are already part of the event.
 
-In the project directory, you can run:
+## Project Structure
+The project is splitted into component, pages, utils, and the context.
 
-### `yarn start`
+### Components
+This is where all reuseable logics lives.
+> Button > consist of button components logics
+>dashboad > dashboard the card component
+>error-message> error message component
+>inputs > text inputs components
+>layouts > header > page-layout component 
+>loading > a loading spinner component
+>sidebar > Auth side bar component
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Pages
+> Auth > signIn ,signOut 
+> Dashboard> creatEevent, dashboard, dashboardDetails, editEvent
+> NotFound
+> Routes
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies used
+>axios
+>create-react app
+>react-router dom
+>react context api
+### PROJECT WORKTHROUGH
+The apps entry point in the index.js that can be found in the apps root dir. 
+It uses the context api for  state management and alse react hooks, which makes entire app have access to state variables and action.
+styled-components was use for managing and creating custom re-useable styles, and axios for making api calls to the server.
+### TODO
+Update Events: logged users should be able to update an event, if they are the creators.
+ The action and component for the feature is already created but not yet implemented.
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Delete Events: logged in users should be able to delete the event they created
+ Action already added to the State and the component is already create.
 
-### `yarn build`
+REFRESH TOKEN: This feature has not been added yet, however axios interceptors logs users with expired token out automatically.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### IMPROVEMENTS
+make more reuseable logic in the layouts section of the app.
+and adding some more css animations and styling.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation
+In the project directory, you can run.
+### `yarn add`  or `npm install`
 
-### `yarn eject`
+## Running the application
+> Requirements, create a  .env file in the root dir with the following ->
+-> REACT_APP_API_URL : https://testproject-api-v2.strv.com
+-> REACT_APP_API_KEY : Your api key.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Then Run.
+### `yarn start` to start the application
