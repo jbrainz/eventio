@@ -6,7 +6,7 @@ Eventio is an event management application that allows logged in users ### Join,
 depending on the current logged in user, users can either decide to join an event they are not currently a part of, or leave an event if they are already part of the event.
 
 ## Project Structure
-The project is splitted into component, pages, utils, and the context.
+The project is splitted into component, pages, utils, and context.
 
 ### Components
 This is where all reuseable logics lives.
@@ -30,7 +30,7 @@ This is where all reuseable logics lives.
 >react-router dom
 >react context api
 ### PROJECT WORKTHROUGH
-The apps entry point in the index.js that can be found in the apps root dir. 
+The app's entry point in the index.js that can be found in the apps root dir. 
 It uses the context api for  state management and alse react hooks, which makes entire app have access to state variables and action.
 styled-components was use for managing and creating custom re-useable styles, and axios for making api calls to the server.
 ### TODO
