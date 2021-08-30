@@ -6,14 +6,8 @@ const Wrapper = styled.button`
   font-family: Hind;
   font-style: normal;
   font-weight: 600;
-  line-height: ${(props) =>
-    props.size === 'main'
-      ? '32px'
-      : props.size === 'main-small'
-      ? '14px'
-      : '8px'};
   text-align: center;
-  
+  text-transform: uppercase;
 `
 export const FilledButton = styled(Wrapper)`
   border-width: 0px;
@@ -64,12 +58,10 @@ const IconWrapper = styled.span`
   margin-top: 15px;
   border: 1.33333e-11px solid rgba(0, 0, 0, 0.00784314);
 `
-export const TextWrapper = styled.p`
+export const TextWrapper = styled.span`
   width: 100%;
   text-align: center;
   text-transform: uppercase;
-  align-self: center;
-  margin-top: 10px;
 `
 
 const RoundedWrapper = styled.button`
@@ -92,7 +84,7 @@ export const Button = ({ label, size, variant, theme, icon, type, onClick }) => 
   if (theme === 'filled') {
     return (
       <FilledButton onClick={onClick} type={type} size={size} variant={variant}>
-        <TextWrapper>{label}</TextWrapper>
+        {label}
       </FilledButton>
     )
   } else {
@@ -106,7 +98,7 @@ export const Button = ({ label, size, variant, theme, icon, type, onClick }) => 
         <IconWrapper>
           <i className='fas fa-trash'></i>
         </IconWrapper>
-        <TextWrapper>{label}</TextWrapper>
+        {label}
       </OutlinedButton>
     )
   }

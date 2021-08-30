@@ -40,6 +40,7 @@ const EventState = props => {
     try {
       const res = await axiosInstance.post('/events', event)
       dispatch({ type: ADD_EVENT, payload: res.data })
+      getAllEvent()
     } catch (error) {
       dispatch({ type: EVENT_FETCH_ERROR, payload: error })
     }
