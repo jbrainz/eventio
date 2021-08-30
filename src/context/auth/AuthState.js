@@ -33,7 +33,6 @@ const AuthState = props => {
   const login = async (formData) => {
     try {
       const res = await axiosInstance.post(`/auth/native`, formData)
-      console.log(res.headers)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res

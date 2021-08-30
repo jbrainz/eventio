@@ -32,7 +32,7 @@ const FormWrapper = styled.div`
   margin-left: 120px;
   padding: 32px;
   background-color: #ffffff;
-  margin-right: 17px;
+  margin-right: 27px;
   @media (max-width: 1200px) {
     width: 95%;
     margin:10px;
@@ -92,21 +92,21 @@ const EditEvent = ({match}) => {
               type='text'
               name='date'
               label='Date'
-              value={date}
+              value={events.startsAt}
             />
             <FormInputs type='time' name='time' label='Time' value={time} />
-            <FormInputs type='text' name='title' label='Title' value={title} />
+            <FormInputs type='text' name='title' label='Title' value={events.title} />
             <FormInputs
               type='text'
               name='description'
               label='Description'
-              value={description}
+              value={events.description}
             />
             <FormInputs
               type='number'
               name='capacity'
               label='Capacity'
-              value={capacity}
+              value={events.capacity}
             />
           </FormWrapper>
         {width > 1200 && <CardAttendees />}

@@ -4,11 +4,8 @@ import './index.css';
 import App from './App';
 import axios from 'axios'
 
-const APIKey = 'd4b4b5a989a0d3c746749f7c74ba0b33ca6b1ac9';
-
-const baseURL = `https://testproject-api-v2.strv.com`
-
-
+const APIKey = process.env.REACT_APP_API_KEY
+const baseURL = process.env.REACT_APP_API_URL
 let headers = {
   'Content-Type': 'application/json',
   'APIKey': APIKey,

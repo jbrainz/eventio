@@ -12,7 +12,6 @@ import {
   JOIN_EVENT,
   LEAVE_EVENT,
   EVENT_FETCH_ERROR,
-  CLOSE_FORM
 } from '../types'
 import { axiosInstance } from '../..'
 
@@ -43,7 +42,6 @@ const EventState = props => {
       dispatch({ type: ADD_EVENT, payload: res.data })
     } catch (error) {
       dispatch({ type: EVENT_FETCH_ERROR, payload: error })
-      console.log(error);
     }
   }
   // deletes an event from the database
@@ -92,7 +90,6 @@ const EventState = props => {
         type: EVENT_FETCH_ERROR,
         payload: error.response
       })
-      console.log(error);
     }
   }
   //  handler that takes in the id event as the parameter, fires the leave event action to the api.

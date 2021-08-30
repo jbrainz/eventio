@@ -106,11 +106,10 @@ export const DashboardDetails = ({ history, match }) => {
   const eventsId = match.params.id
   const eventContext = useContext(EventContext)
   const { getEvent, events } = eventContext
-  console.log(events)
 
   useEffect(() => {
     getEvent(eventsId)
-    //eslint-disable-next-line
+      //eslint-disable-next-line
   }, [eventsId])
   return (
     <>
@@ -126,11 +125,11 @@ export const DashboardDetails = ({ history, match }) => {
                 key={events.id}
                 date={getDate(events)}
                 title={events.title}
-                author={`${events.owner.firstName} ${events.owner.lastName}`}
+                author={`${events.owner?.firstName} ${events.owner?.lastName}`}
                 discription={events.description}
                 label='Default'
                 capacity={events.capacity}
-                totalAtendees={events.attendees.length}
+                totalAtendees={events.attendees?.length}
                 variant={
                   events.isOwner
                     ? 'tertiary'
