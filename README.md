@@ -34,12 +34,12 @@ The app's entry point in the index.js that can be found in the apps root dir.
 It uses the context api for  state management and alse react hooks, which makes entire app have access to state variables and action.
 styled-components was use for managing and creating custom re-useable styles, and axios for making api calls to the server.
 ### TODO
-Update Events: logged users should be able to update an event, if they are the creators.
+Update Events: logged in users should be able to update an event, if they are the creators.
  The action and component for the feature is already created but not yet implemented.
 
 
 Delete Events: logged in users should be able to delete the event they created
- Action already added to the State and the component is already create.
+ Action already added to the State and the component is already created.
 
 REFRESH TOKEN: This feature has not been added yet, however axios interceptors logs users with expired token out automatically.
 
@@ -50,6 +50,7 @@ and adding some more css animations and styling.
 
 ## Installation
 In the project directory, you can run.
+to install necessary dependencies.
 ### `yarn add`  or `npm install`
 
 ## Running the application
@@ -57,5 +58,5 @@ In the project directory, you can run.
 -> REACT_APP_API_URL : https://testproject-api-v2.strv.com
 -> REACT_APP_API_KEY : Your api key.
 
-Then Run.
+Then Run from the project root directory from your terminal.
 ### `yarn start` to start the application
