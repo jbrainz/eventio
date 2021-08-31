@@ -30,9 +30,9 @@ This is where all reuseable logics lives.
 >react-router dom
 >react context api
 ### PROJECT WORKTHROUGH
-The app's entry point in the index.js that can be found in the apps root dir. 
-It uses the context api for  state management and alse react hooks, which makes entire app have access to state variables and action.
-styled-components was use for managing and creating custom re-useable styles, and axios for making api calls to the server.
+The app's entry point is the index.js that can be found in the apps root dir. 
+This app uses the context api for  state management, which makes the entire app have access to state variables and action, and react hooks for local component state.
+styled-components was used for managing and creating custom re-useable styles, and axios for making api calls to the server.
 ### TODO
 Update Events: logged in users should be able to update an event, if they are the creators.
  The action and component for the feature is already created but not yet implemented.
@@ -43,10 +43,12 @@ Delete Events: logged in users should be able to delete the event they created
 
 REFRESH TOKEN: This feature has not been added yet, however axios interceptors logs users with expired token out automatically.
 
+Profile Screen.
+
 
 ### IMPROVEMENTS
 make more reuseable logic in the layouts section of the app.
-and adding some more css animations and styling.
+and adding some more css animations and styling, and css global variables.
 
 ## Installation
 In the project directory, you can run.
