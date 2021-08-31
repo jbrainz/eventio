@@ -301,9 +301,9 @@ export const Layout = ({ history, onClick }) => {
                     />
                   )
                 })}
-            {color1 && events ? (
+            {color1 && events && 
               eventsTShow
-                .filter((event) => new Date(event.startsAt) < new Date())
+                
                 .map((event) => {
                   return (
                     <CardHolder
@@ -334,12 +334,11 @@ export const Layout = ({ history, onClick }) => {
                     />
                   )
                 })
-            ) : (
-              <TextWrapper> All caught up </TextWrapper>
-            )}
-            {color1 &&
+            }
+            {color3 &&
               events &&
-              eventsTShow.map((event) => {
+              eventsTShow.filter((event) => new Date(event.startsAt) < new Date())
+              .map((event) => {
                 return (
                   <CardHolder
                     toggleGrid={toggleGrid}
@@ -438,7 +437,7 @@ export const Layout = ({ history, onClick }) => {
                   />
                 )
               })}
-            {color1 &&
+            {color3 &&
               events &&
               eventsTShow
                 .filter((event) => new Date(event.startsAt) < new Date())
