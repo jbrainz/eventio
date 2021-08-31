@@ -73,8 +73,12 @@ const CreateEvent = ({ history }) => {
   const { title, date, description, time, capacity } = event
   const eventContext = useContext(EventContext)
   const [componetError, setError] = useState('')
+  const [createError, setCreateError] = useState(false)
   const { show, error, addEvent } = eventContext
   const onChange = (e) => {
+    if(createError){
+      setCreateError(false)
+    }
     setEvent({
       ...event,
       [e.target.name]: e.target.value,
@@ -89,12 +93,14 @@ const CreateEvent = ({ history }) => {
       date === null ||
       description === '' ||
       time === '' ||
-      capacity < 1
+      capacity < 1 
     ) {
-      return console.log('enter valid event details')
+      return setError('Enter valid event details')
     } else if (d < new Date()) {
       return setError('Event has to be in the future')
-    } else {
+    } else if(capacity > 50){ 
+        setCreateError(true)
+      return setError('Capacity can not be more than 50') } else {
       addEvent({
         title,
         description,
@@ -112,7 +118,7 @@ const CreateEvent = ({ history }) => {
           <FormWrapper>
             <form onSubmit={onSubmit} autoComplete='of'>
               <FormTitle>Create new event</FormTitle>
-              {error ? (
+              {error || createError ? (
                 <Message message={componetError} />
               ) : (
                 <FormSubtitle>Enter details below</FormSubtitle>
