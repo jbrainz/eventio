@@ -1,18 +1,19 @@
 import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
+import * as yup from 'yup'
 
 import useWindowDimensions from '../../utils/responsive'
 
 import AuthContext from '../../context/auth/authContext'
 
-import FormInputs from '../../components/inputs/FormInputs'
 import { Button } from '../../components/button/Button'
-import SideBar from '../../components/sidebar/Sidebar'
+import SideBar, { Logo } from '../../components/sidebar/Sidebar'
 
 import './signup.css'
 import { LogoContainer } from '../../components/sidebar/Sidebar'
 import Message from '../../components/error-message/Message'
-import mobileLogo from '../../assets/img/mobilelogo.png'
+import { TextField } from '@material-ui/core'
+import { Formik } from 'formik'
 
 export const SigupLinkWrapper = styled.div`
   position: absolute;
@@ -21,10 +22,10 @@ export const SigupLinkWrapper = styled.div`
   right: 39px;
   top: 40px;
   @media (max-width: 1200px) {
-   position: relative;
-   right: 0;
-   top: 20px;
-   left: 62px;
+    position: relative;
+    right: 0;
+    top: 20px;
+    left: 62px;
   }
 `
 export const SigupLinkText = styled.p`
@@ -51,10 +52,11 @@ export const Container = styled.div`
   right: 505px;
   left: 719px;
   @media (max-width: 1200px) {
-    top: 100px;
+    top: 130px;
     left: 12px;
     right: 12px;
     width: auto;
+    margin-bottom: 10%;
   }
 `
 export const MainHeader = styled.h2`
@@ -83,58 +85,38 @@ export const SubtitleHeader = styled.h4`
 `
 
 export const ButtonHolder = styled.div`
-  margin-top: 32px;
+  margin-top: 52px;
   @media (max-width: 1200px) {
     position: relative;
     text-align: center;
     margin-top: 48px;
+    margin-bottom: 38px;
   }
 `
 const IconHolder = styled.div`
   position: absolute;
-  top: 20px;
-  right: 20px;
-  @media (max-width: 1200px) {
-    right: 178px;
-  }
+  top: 40%;
+  right: 7%;
 `
-export  const MobileLogo = styled(LogoContainer)`
+export const MobileLogo = styled(LogoContainer)`
   height: 22px;
-  width: 22px;
   left: 24px;
   top: 29px;
 `
-
+const initialValues = {
+  email: '',
+  password: '',
+}
 const SignIn = ({ history }) => {
   const [open, setOpen] = useState(false)
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-  })
-  const { email, password } = user
+
   const authContext = useContext(AuthContext)
 
-  const { login, error, clearErrors, isAuthenticated } = authContext
-  const onChange = (e) => {
-    if (error) {
-      setTimeout(() => {
-        clearErrors()
-      }, 200)
-    }
-    return setUser({ ...user, [e.target.name]: e.target.value })
-  }
+  const { login, error, isAuthenticated } = authContext
 
   //Submit Handler
-  const onSubmit = (e) => {
-    e.preventDefault()
-    if (email === '' || password === '') {
-      return
-    } else {
-      login({
-        email,
-        password,
-      })
-    }
+  const handleSubmit = (values, { isSubmitting }) => {
+    login({ values })
   }
   const { width } = useWindowDimensions()
   useEffect(() => {
@@ -148,11 +130,7 @@ const SignIn = ({ history }) => {
   return (
     <>
       {width > 1200 && <SideBar />}
-      {width < 1200 && (
-        <MobileLogo>
-          <img src={mobileLogo} alt='logo' />{' '}
-        </MobileLogo>
-      )}
+      {width < 1200 && <Logo color='mobile' />}
       {width > 1200 && (
         <SigupLinkWrapper>
           <SigupLinkText>
@@ -164,67 +142,97 @@ const SignIn = ({ history }) => {
         </SigupLinkWrapper>
       )}
       <Container>
-        <MainHeader>Sign in to Eventio</MainHeader>
+        <MainHeader>Sign in to N-Verify</MainHeader>
         {error ? (
           <Message message="Oops! Credentials cant't find that user!" />
         ) : (
-          <SubtitleHeader>Enter your details below.</SubtitleHeader>
+          <SubtitleHeader>Enter your details below to continue.</SubtitleHeader>
         )}
-        <form onSubmit={onSubmit} autoComplete='off'>
-          <FormInputs
-            onChange={onChange}
-            value={email}
-            bg='#F2F2F2'
-            type='email'
-            name='email'
-            id={error && 'label'}
-            label='Email'
-          />
-          <div className='form__container-password'>
-            <input
-              className='input__password'
-              name='password'
-              type={open ? 'text' : 'password'}
-              required={true}
-              value={password}
-              onChange={onChange}
-            />
-            <label
-              id={error && 'label'}
-              className='label-password'
-              name='password'
-            >
-              <div className='password_holder'>
-                <span className='content-password'>Password</span>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          enableReinitialize={true}
+          validationSchema={loginSchema}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+            setSubmitting,
+            setFieldValue,
+          }) => (
+            <form onSubmit={handleSubmit} autoComplete='off'>
+              <TextField
+                onChange={handleChange}
+                value={values.email}
+                bg='#F2F2F2'
+                type='email'
+                name='email'
+                label='Email'
+                variant='outlined'
+                margin='normal'
+                fullWidth
+                onBlur={handleBlur}
+                error={Boolean(touched.email && errors.email)}
+                helperText={touched.email && errors.email}
+              />
+              <div className='form__container-password'>
+                <TextField
+                  name='password'
+                  type={open ? 'text' : 'password'}
+                  value={values.password}
+                  onChange={handleChange}
+                  variant='outlined'
+                  margin='normal'
+                  label='Password'
+                  fullWidth
+                  onBlur={handleBlur}
+                  error={Boolean(touched.password && errors.password)}
+                  helperText={touched.password && errors.password}
+                />
+                <IconHolder>
+                  <span onClick={() => setOpen(!open)} className='icon-eye'>
+                    <i className={open ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
+                  </span>
+                </IconHolder>
               </div>
-            </label>
-            <IconHolder>
-              <span onClick={() => setOpen(!open)} className='icon-eye'>
-                <i className={open ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
-              </span>
-            </IconHolder>
-          </div>
-        {width < 1200 &&  <SigupLinkWrapper>
-            <SigupLinkText>
-              Dont Have account?{' '}
-              <StrongSignUp onClick={() => history.push('/signup')}>
-                SIGN UP
-              </StrongSignUp>
-            </SigupLinkText>
-          </SigupLinkWrapper>
-            }
-          <ButtonHolder>
-            <Button
-              type='submit'
-              label='Sign in'
-              variant='primary'
-              size='main'
-            />
-          </ButtonHolder>
-        </form>
+              {width < 1200 && (
+                <SigupLinkWrapper>
+                  <SigupLinkText>
+                    Dont Have account?{' '}
+                    <StrongSignUp onClick={() => history.push('/signup')}>
+                      SIGN UP
+                    </StrongSignUp>
+                  </SigupLinkText>
+                </SigupLinkWrapper>
+              )}
+              <ButtonHolder>
+                <Button
+                  type='submit'
+                  label='Sign in'
+                  variant='primary'
+                  size='main'
+                />
+              </ButtonHolder>
+            </form>
+          )}
+        </Formik>
       </Container>
     </>
   )
 }
-
+const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('cannot be blank')
+    .required('please enter a valid email'),
+  password: yup
+    .string()
+    .min(6, 'password is too short.')
+    .max(50, 'password is too long'),
+})
 export default SignIn

@@ -18,6 +18,8 @@ import SignIn from './pages/auth/SignIn'
 
 import EventState from './context/events/eventState';
 import PageNotFound from './pages/NotFound';
+import { ThemeProvider } from '@material-ui/core';
+import { theme } from './theme/themeProvider';
 
 
 const App = () => {
@@ -25,6 +27,7 @@ const App = () => {
   return (
     <AuthState>
       <EventState>
+        <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Switch>
             <PrivateRoutes exact path="/" component={Dashboard} />
@@ -36,6 +39,7 @@ const App = () => {
             <Route component={PageNotFound} />
           </Switch>
         </BrowserRouter>
+        </ThemeProvider>
       </EventState>
     </AuthState>
   )

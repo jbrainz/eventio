@@ -1,4 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
+import { Formik } from 'formik'
+import * as yup from 'yup'
+import { TextField } from '@material-ui/core'
 
 import {
   SigupLinkWrapper,
@@ -7,49 +10,43 @@ import {
   Container,
   MainHeader,
   SubtitleHeader,
-  MobileLogo,
   ButtonHolder,
 } from './SignIn'
-import AuthContext from '../../context/auth/authContext'
 
+import AuthContext from '../../context/auth/authContext'
 import { Button } from '../../components/button/Button'
-import FormInputs from '../../components/inputs/FormInputs'
-import SideBar from '../../components/sidebar/Sidebar'
+import SideBar, { Logo } from '../../components/sidebar/Sidebar'
 import Loading from '../../components/loading/Loading'
 import useWindowDimensions from '../../utils/responsive'
-import mobileLogo from '../../assets/img/mobilelogo.png'
 
 const SignUp = ({ history }) => {
   const authContext = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
 
-  const [user, setUser] = useState({
+  const initialValues = {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     password: '',
-    password2: '',
-  })
+    confrimPassword: '',
+  }
+
+  // const [user, setUser] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   phone: '',
+  //   password: '',
+  //   confrimPassword: '',
+  // })
   const { register, isAuthenticated } = authContext
 
-  const { firstName, email, lastName, password, password2 } = user
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value })
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    if (firstName === '' || email === '' || password === '') {
-      return
-    } else if (password !== password2) {
-      return console.log('Password mismatch')
-    } else {
-      setLoading(true)
-      register({
-        firstName,
-        lastName,
-        email,
-        password,
-      })
-    }
+  const handleSubmit = (values, { isSubmitting }) => {
+    setLoading(true)
+    register({
+      values,
+    })
     setLoading(false)
   }
   const { width } = useWindowDimensions()
@@ -63,11 +60,7 @@ const SignUp = ({ history }) => {
   return (
     <>
       {width > 1200 ? <SideBar /> : null}
-      {width < 1200 ? (
-        <MobileLogo>
-          <img src={mobileLogo} alt='logo' />{' '}
-        </MobileLogo>
-      ) : null}
+      {width < 1200 ? <Logo color='mobile' /> : null}
       {width > 1200 && (
         <SigupLinkWrapper>
           <SigupLinkText>
@@ -82,72 +75,156 @@ const SignUp = ({ history }) => {
         <Loading />
       ) : (
         <Container>
-          <MainHeader>Get started absolutely free.</MainHeader>
+          <MainHeader>Create a free account to get started.</MainHeader>
           <SubtitleHeader>Enter your details below.</SubtitleHeader>
-          <form onSubmit={onSubmit} autoComplete='off'>
-            <FormInputs
-              onChange={onChange}
-              value={firstName}
-              bg='#F2F2F2'
-              type='text'
-              name='firstName'
-              label='First name'
-            />
-            <FormInputs
-              onChange={onChange}
-              value={lastName}
-              bg='#F2F2F2'
-              type='text'
-              name='lastName'
-              label='Last name'
-            />
-            <FormInputs
-              onChange={onChange}
-              value={email}
-              bg='#F2F2F2'
-              type='email'
-              name='email'
-              label='Email'
-            />
-            <FormInputs
-              bg='#F2F2F2'
-              type='password'
-              name='password'
-              onChange={onChange}
-              value={password}
-              label='Password'
-            />
-            <FormInputs
-              bg='#F2F2F2'
-              type='password'
-              name='password2'
-              onChange={onChange}
-              value={password2}
-              label='Repeat password'
-            />
-            {width < 1200 && (
-              <SigupLinkWrapper>
-                <SigupLinkText>
-                  Already Have an account?{' '}
-                  <StrongSignUp onClick={() => history.push('/signin')}>
-                    SIGN IN
-                  </StrongSignUp>
-                </SigupLinkText>
-              </SigupLinkWrapper>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            enableReinitialize={true}
+            validationSchema={signUpValidationsSchema}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              setSubmitting,
+              setFieldValue,
+            }) => (
+              <form onSubmit={handleSubmit} autoComplete='off'>
+                <TextField
+                  value={values.firstName}
+                  bg='#F2F2F2'
+                  type='text'
+                  name='firstName'
+                  label='first name'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  variant='outlined'
+                  margin='normal'
+                  fullWidth
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  helperText={touched.firstName && errors.firstName}
+                />
+                <TextField
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  fullWidth
+                  bg='#F2F2F2'
+                  type='text'
+                  name='lastName'
+                  label='last name'
+                  variant='outlined'
+                  margin='normal'
+                />
+                <TextField
+                  onChange={handleChange}
+                  fullWidth
+                  onBlur={handleBlur}
+                  error={Boolean(touched.email && errors.email)}
+                  helperText={touched.email && errors.email}
+                  value={values.email}
+                  bg='#F2F2F2'
+                  type='email'
+                  name='email'
+                  label='email'
+                  variant='outlined'
+                  margin='normal'
+                />
+                <TextField
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  fullWidth
+                  error={Boolean(touched.phone && errors.phone)}
+                  helperText={touched.phone && errors.phone}
+                  value={values.phone}
+                  bg='#F2F2F2'
+                  type='text'
+                  name='phone'
+                  label='phone'
+                  variant='outlined'
+                  margin='normal'
+                />
+                <TextField
+                  bg='#F2F2F2'
+                  type='password'
+                  name='password'
+                  onChange={handleChange}
+                  fullWidth
+                  onBlur={handleBlur}
+                  error={Boolean(touched.password && errors.password)}
+                  helperText={touched.password && errors.password}
+                  value={values.password}
+                  variant='outlined'
+                  margin='normal'
+                  label='password'
+                />
+                <TextField
+                  bg='#F2F2F2'
+                  type='password'
+                  name='confrimPassword'
+                  onChange={handleChange}
+                  variant='outlined'
+                  margin='normal'
+                  fullWidth
+                  onBlur={handleBlur}
+                  error={Boolean(
+                    touched.confrimPassword && errors.confrimPassword
+                  )}
+                  helperText={touched.confrimPassword && errors.confrimPassword}
+                  value={values.confrimPassword}
+                  label='confrim password'
+                />
+                {width < 1200 && (
+                  <SigupLinkWrapper>
+                    <SigupLinkText>
+                      Already Have an account?{' '}
+                      <StrongSignUp onClick={() => history.push('/signin')}>
+                        SIGN IN
+                      </StrongSignUp>
+                    </SigupLinkText>
+                  </SigupLinkWrapper>
+                )}
+                <ButtonHolder>
+                  <Button
+                    type='submit'
+                    label='Sign up'
+                    variant='primary'
+                    size='main'
+                  />
+                </ButtonHolder>
+              </form>
             )}
-            <ButtonHolder>
-              <Button
-                type='submit'
-                label='Sign up'
-                variant='primary'
-                size='main'
-              />
-            </ButtonHolder>
-          </form>
+          </Formik>
         </Container>
       )}
     </>
   )
 }
+
+const phoneValidation = /^234[0-9]{10}$/
+
+const signUpValidationsSchema = yup.object().shape({
+  firstName: yup.string().required('name cannot be blank'),
+  email: yup
+    .string()
+    .email('email cannot be blank.')
+    .required('please enter a valid email'),
+  phone: yup
+    .string()
+    .matches(phoneValidation, 'phone cannot be blank i.e 2348012345678')
+    .required(),
+  password: yup
+    .string()
+    .min(6, 'password is too short.')
+    .max(50, 'password is too long'),
+  confrimPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+})
 
 export default SignUp

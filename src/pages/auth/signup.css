@@ -1,10 +1,4 @@
-
-.form__container-password {
-  width: 480px;
-  height: 50px;
-  position: relative;
-  margin-top: 10px;
-}
+/* 
 
 .input__password {
   width: 100%;
@@ -32,17 +26,7 @@
 #label{
   color: red;
 }
-.icon-eye{
-   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0%;
-  right: 12px; 
-  border-bottom: 2px solid #dae1e7;
-  color: #c9ced3;
-  cursor:pointer;
-}
+
 
 .content-password {
   position: absolute;
@@ -63,12 +47,28 @@
   transform: translateX(0%);
 }
 
-.icon_holder{
+
+
+form{
+  margin-bottom: 2em;
+} */
+.icon-eye {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0%;
+  right: 12px;
+  border-bottom: 2px solid #dae1e7;
+  color: #c9ced3;
+  cursor: pointer;
+}
+
+.icon_holder {
   position: absolute;
   top: 20px;
   right: 280px;
 }
-
-form{
-  margin-bottom: 2em;
+.form__container-password {
+  position: relative;
 }

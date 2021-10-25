@@ -1,18 +1,18 @@
 import './style.css'
 import PropTypes from 'prop-types'
 
-
-const FormInputs = ({name,type,label,value,bg,id, onChange}) => {
+const FormInputs = ({ name, type, label, value, bg, id, onChange }) => {
   return (
     <div className='form__container'>
       <input
         className='input__email'
         name={name}
-        style={{backgroundColor: bg}}
+        style={{ backgroundColor: bg }}
         type={type}
-        required={true}
         value={value}
+        required
         onChange={onChange}
+        w
       />
       <label id={id} className='label-name' name={name}>
         <span className='content-email'>{label}</span>

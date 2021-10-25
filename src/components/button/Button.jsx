@@ -14,7 +14,11 @@ export const FilledButton = styled(Wrapper)`
   border-radius: 4px;
   color: white;
   background-color: ${(props) =>
-    props.variant === 'primary' ? '#22d486' : props.variant === 'secondary' ? '#FF4081' : '#b9bcc0'};
+    props.variant === 'primary'
+      ? '#2176ff'
+      : props.variant === 'secondary'
+      ? '#FF4081'
+      : '#b9bcc0'};
   width: ${(props) =>
     props.size === 'main'
       ? '240px'
@@ -35,6 +39,17 @@ export const FilledButton = styled(Wrapper)`
       : '6px'};
   cursor: pointer;
   letter-spacing: 1px;
+  :hover {
+    background-color: ${(props) =>
+      props.variant === 'primary'
+        ? '#fdfffc'
+        : props.variant === 'secondary'
+        ? '#fdfffc'
+        : '#2176ff'};
+    color: #2e3238;
+    border-color: #2176ff;
+    border-width: 2px;
+  }
 `
 
 const OutlinedButton = styled(Wrapper)`
@@ -77,10 +92,17 @@ const RoundedWrapper = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
 `
 
-export const Button = ({ label, size, variant, theme, icon, type, onClick }) => {
+export const Button = ({
+  label,
+  size,
+  variant,
+  theme,
+  icon,
+  type,
+  onClick,
+}) => {
   if (theme === 'filled') {
     return (
       <FilledButton onClick={onClick} type={type} size={size} variant={variant}>
@@ -104,17 +126,16 @@ export const Button = ({ label, size, variant, theme, icon, type, onClick }) => 
   }
 }
 
-export const RoundedButon = ({onClick, variant, icon }) => {
-  if (icon==="check") {
+export const RoundedButon = ({ onClick, variant, icon }) => {
+  if (icon === 'check') {
     return (
       <RoundedWrapper onClick={onClick} variant={variant} icon={icon}>
         <i className='fas fa-check'></i>
       </RoundedWrapper>
     )
-  }
-  else {
+  } else {
     return (
-       <RoundedWrapper onClick={onClick} variant={variant}>
+      <RoundedWrapper onClick={onClick} variant={variant}>
         <i className='fas fa-plus'></i>
       </RoundedWrapper>
     )
@@ -127,7 +148,7 @@ Button.propTypes = {
   variant: PropTypes.string,
   theme: PropTypes.string,
   type: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 RoundedButon.propTypes = {
